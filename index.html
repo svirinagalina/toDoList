@@ -1,49 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Простой список задач">
-  <title>Список задач</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <main class="app" aria-labelledby="page-title">
-    <header class="app__header">
-      <p class="app__eyebrow">План на сегодня</p>
-      <h1 id="page-title">Мои задачи</h1>
-      <p class="app__summary" id="task-summary">0 задач</p>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+  </head>
+  <body>
+    <main>
+      <!-- Заголовок -->
+      <div class="header-group">
+        <h1 class="main-header" id="dayName">Среда</h1>
+        <p class="header-group__sub-header" id="dateToday">3 января</p>
+      </div>
 
-    <section class="task-panel" aria-labelledby="task-form-title">
-      <h2 id="task-form-title">Добавить задачу</h2>
-      <form class="task-form" id="task-form">
-        <label class="visually-hidden" for="task-input">Название задачи</label>
+      <!-- Поле поиска -->
+      <div class="search-field">
         <input
-          id="task-input"
-          name="task"
           type="text"
-          placeholder="Например, купить продукты"
-          autocomplete="off"
-          required
-        >
-        <button type="submit">Добавить</button>
-      </form>
-    </section>
+          class="search-field__input"
+          id="searchInput"
+          placeholder="Поиск"
+        />
+        <span class="search-field__icon material-symbols-rounded">search</span>
+      </div>
 
-    <section class="task-list-section" aria-labelledby="task-list-title">
-      <div class="section-heading">
-        <h2 id="task-list-title">Список задач</h2>
-        <button class="button button--muted" id="clear-completed" type="button">
-          Очистить выполненные
+      <!-- Фильтры -->
+      <div class="split-button">
+        <button
+          class="split-button__button split-button__button--active"
+          id="filter-all"
+          onclick="filterTodos('all')"
+        >
+          <span class="material-symbols-rounded split-button__button-icon">check</span>
+          Все
+        </button>
+        <button
+          class="split-button__button split-button__button--center"
+          id="filter-active"
+          onclick="filterTodos('active')"
+        >
+          <span class="material-symbols-rounded split-button__button-icon">check</span>
+          Активные
+        </button>
+        <button
+          class="split-button__button"
+          id="filter-done"
+          onclick="filterTodos('done')"
+        >
+          <span class="material-symbols-rounded split-button__button-icon">check</span>
+          Завершённые
         </button>
       </div>
 
-      <ul class="task-list" id="task-list" aria-live="polite"></ul>
-      <p class="empty-state" id="empty-state">Здесь появятся ваши задачи.</p>
-    </section>
-  </main>
+      <!-- Список задач -->
+      <h2 class="main-header">Список дел</h2>
+      <ul class="todo-list" id="todo-list"></ul>
 
-  <script src="script.js" defer></script>
-</body>
+      <!-- Плавающая кнопка -->
+      <button class="float-button" id="addTaskBtn">
+        <span class="material-symbols-rounded">add</span>
+      </button>
+    </main>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Новая задача</h2>
+          <button class="modal-close" onclick="closeModal()">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+
+        <form class="create-form" id="create-form">
+          <div class="form-group">
+            <label for="description">Описание</label>
+            <textarea
+              id="description"
+              class="create-form__input create-form__textarea"
+              placeholder="Введите описание задачи"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="startDate">Дата и время</label>
+            <input
+              type="datetime-local"
+              id="startDate"
+              class="create-form__input"
+              required
+            />
+          </div>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="reminder" />
+            <span class="checkbox-custom"></span>
+            Напомнить мне
+          </label>
+
+          <div class="form__buttons-wrapper">
+            <button class="form-button form-button--primary" type="submit">
+              Добавить
+            </button>
+            <button
+              class="form-button form-button--secondary"
+              type="button"
+              onclick="closeModal()"
+            >
+              Отмена
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
