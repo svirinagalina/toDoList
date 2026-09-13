@@ -1,0 +1,497 @@
+/* Переменные цветов */
+:root {
+  --main-bg-color: #fffbfe;           /* Светло-фиолетовый фон */
+  --main-accent-color: #f2edf7;       /* Акцент 1 */
+  --second-accent-color: #e8dff5;     /* Акцент 2 */
+  --primary-color: #6750a4;           /* Фиолетовый (главный цвет) */
+  --primary-light: #7961bb;           /* Более светлый фиолетовый */
+  --text-primary: #1f182a;            /* Тёмный текст */
+  --text-secondary: #49454f;          /* Серый текст */
+  --border-color: #79747e;            /* Цвет граней */
+  --success-color: #6750a4;
+  --error-color: #b3261e;             /* Красный для удаления */
+  --shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: var(--main-bg-color);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+main {
+  height: 100vh;
+  background-color: var(--main-bg-color);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px 16px;
+  gap: 16px;
+  overflow-y: auto;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ========== ЗАГОЛОВОК ========== */
+.header-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.main-header {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.header-group__sub-header {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+/* ========== ПОЛЕ ПОИСКА ========== */
+.search-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  width: 100%;
+  height: 48px;
+  border-radius: 28px;
+  background-color: var(--main-accent-color);
+  overflow: hidden;
+  padding: 0 16px;
+}
+
+.search-field__input {
+  height: 100%;
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  appearance: none;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-primary);
+  font-family: "Open Sans", sans-serif;
+}
+
+.search-field__input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-field__icon {
+  color: var(--text-secondary);
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* ========== ФИЛЬТРЫ ========== */
+.split-button {
+  width: 100%;
+  height: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: var(--main-bg-color);
+}
+
+.split-button__button {
+  border: none;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--main-bg-color);
+  transition: all 0.15s linear;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+.split-button__button:hover {
+  background-color: var(--main-accent-color);
+}
+
+.split-button__button-icon {
+  width: 0px;
+  overflow: hidden;
+  transition: all 0.15s linear;
+  color: var(--primary-color) !important;
+  font-size: 18px !important;
+}
+
+.split-button__button--active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.split-button__button--active .split-button__button-icon {
+  width: 18px;
+  color: white !important;
+}
+
+/* ========== СПИСОК ЗАДАЧ ========== */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin-bottom: 100px;
+}
+
+.todo-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--main-accent-color);
+  border-radius: 16px;
+  min-height: 80px;
+  transition: all 0.2s ease;
+}
+
+.todo-block:hover {
+  background-color: var(--second-accent-color);
+}
+
+.todo-block__checkbox {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.todo-block__data {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.todo-block__date {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.todo-block__title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* Зачеркивание выполненной задачи */
+.todo-block:has(input[type="checkbox"]:checked) .todo-block__title {
+  text-decoration: line-through;
+  color: rgba(29, 27, 30, 0.5);
+}
+
+.todo-block:has(input[type="checkbox"]:checked) .todo-block__date {
+  color: rgba(73, 69, 79, 0.5);
+}
+
+.todo-block__delete {
+  margin-left: auto;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-size: 24px;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.todo-block__delete:hover {
+  color: var(--error-color);
+}
+
+/* ========== ПЛАВАЮЩАЯ КНОПКА ========== */
+.float-button {
+  position: fixed;
+  background-color: var(--primary-color);
+  box-shadow: var(--shadow);
+  width: 56px;
+  height: 56px;
+  border: none;
+  outline: none;
+  right: 16px;
+  bottom: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.float-button:hover {
+  background-color: var(--primary-light);
+  transform: scale(1.05);
+}
+
+.float-button span {
+  color: white;
+  font-size: 28px;
+}
+
+/* ========== МОДАЛЬНОЕ ОКНО ========== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  justify-content: center;
+  align-items: flex-end;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal.active {
+  display: flex;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content {
+  background-color: var(--main-bg-color);
+  border-radius: 28px 28px 0 0;
+  padding: 24px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  animation: contentSlideUp 0.3s ease-out;
+}
+
+@keyframes contentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--primary-color);
+}
+
+/* ========== ФОРМА ========== */
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.create-form__input {
+  height: 56px;
+  width: 100%;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: transparent;
+  outline: none;
+  transition: all 0.15s linear;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: "Open Sans", sans-serif;
+}
+
+.create-form__textarea {
+  height: 100px;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 200px;
+}
+
+.create-form__input::placeholder {
+  color: var(--text-secondary);
+}
+
+.create-form__input:focus {
+  border: 1px solid var(--primary-color);
+  background-color: var(--main-accent-color);
+}
+
+/* ========== ЧЕКБОКС ========== */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-primary);
+  padding: 8px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: "✓";
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ========== КНОПКИ ========== */
+.form__buttons-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.form-button {
+  height: 40px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Open Sans", sans-serif;
+}
+
+.form-button--primary {
+  color: white;
+  background-color: var(--primary-color);
+}
+
+.form-button--primary:hover {
+  background-color: var(--primary-light);
+}
+
+.form-button--secondary {
+  color: var(--primary-color);
+  background-color: transparent;
+}
+
+.form-button--secondary:hover {
+  background-color: var(--main-accent-color);
+}
+
+/* ========== ПУСТО ========== */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state__icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-state__text {
+  font-size: 16px;
+}
+
+/* ========== АДАПТИВНЫЙ ДИЗАЙН ========== */
+@media (max-width: 480px) {
+  main {
+    padding: 16px 12px 12px;
+    gap: 12px;
+  }
+
+  .main-header {
+    font-size: 24px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .float-button {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .form__buttons-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .form-button {
+    width: 100%;
+  }
+}
