@@ -1,123 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
-  </head>
-  <body>
-    <main>
-      <!-- Заголовок -->
-      <div class="header-group">
-        <h1 class="main-header" id="dayName">Среда</h1>
-        <p class="header-group__sub-header" id="dateToday">3 января</p>
-      </div>
-
-      <!-- Поле поиска -->
-      <div class="search-field">
-        <input
-          type="text"
-          class="search-field__input"
-          id="searchInput"
-          placeholder="Поиск"
-        />
-        <span class="search-field__icon material-symbols-rounded">search</span>
-      </div>
-
-      <!-- Фильтры -->
-      <div class="split-button">
-        <button
-          class="split-button__button split-button__button--active"
-          id="filter-all"
-          onclick="filterTodos('all')"
-        >
-          <span class="material-symbols-rounded split-button__button-icon">check</span>
-          Все
-        </button>
-        <button
-          class="split-button__button split-button__button--center"
-          id="filter-active"
-          onclick="filterTodos('active')"
-        >
-          <span class="material-symbols-rounded split-button__button-icon">check</span>
-          Активные
-        </button>
-        <button
-          class="split-button__button"
-          id="filter-done"
-          onclick="filterTodos('done')"
-        >
-          <span class="material-symbols-rounded split-button__button-icon">check</span>
-          Завершённые
-        </button>
-      </div>
-
-      <!-- Список задач -->
-      <h2 class="main-header">Список дел</h2>
-      <ul class="todo-list" id="todo-list"></ul>
-
-      <!-- Плавающая кнопка -->
-      <button class="float-button" id="addTaskBtn">
-        <span class="material-symbols-rounded">add</span>
-      </button>
-    </main>
-
-    <!-- Модальное окно -->
-    <div class="modal" id="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Новая задача</h2>
-          <button class="modal-close" onclick="closeModal()">
-            <span class="material-symbols-rounded">close</span>
-          </button>
-        </div>
-
-        <form class="create-form" id="create-form">
-          <div class="form-group">
-            <label for="description">Описание</label>
-            <textarea
-              id="description"
-              class="create-form__input create-form__textarea"
-              placeholder="Введите описание задачи"
-              required
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="startDate">Дата и время</label>
-            <input
-              type="datetime-local"
-              id="startDate"
-              class="create-form__input"
-              required
-            />
-          </div>
-
-          <label class="checkbox-label">
-            <input type="checkbox" id="reminder" />
-            <span class="checkbox-custom"></span>
-            Напомнить мне
-          </label>
-
-          <div class="form__buttons-wrapper">
-            <button class="form-button form-button--primary" type="submit">
-              Добавить
-            </button>
-            <button
-              class="form-button form-button--secondary"
-              type="button"
-              onclick="closeModal()"
-            >
-              Отмена
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>Список дел</h2>
+  <div class="container" id="container">
+    <form class="form" id="form">
+      <input
+        type="text"
+        class="form__input"
+        id="input"
+        name="input"
+        placeholder="Добавить новое дело..."
+        required
+      />
+      <button class="form__button" type="submit">+</button>
+    </form>
+  </div>
+  <script src="index.js"></script>
+</body>
 </html>
