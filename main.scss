@@ -1,0 +1,417 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: $main-bg-color;
+  color: $text-primary;
+  font-family: $font-family;
+}
+
+main {
+  @include flex(column, flex-start, stretch, 16px);
+
+  height: 100vh;
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 24px 16px 16px;
+  overflow-y: auto;
+  background-color: $main-bg-color;
+}
+
+.header-group {
+  @include flex(column, flex-start, stretch, 4px);
+
+  &__sub-header {
+    color: $text-secondary;
+    font-size: 15px;
+  }
+}
+
+.main-header {
+  color: $text-primary;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.search-field {
+  @include flex(row, space-between, center, 4px);
+
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  overflow: hidden;
+  border-radius: 28px;
+  background-color: $main-accent-color;
+
+  &__input {
+    @include input-text;
+
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    appearance: none;
+    background: none;
+
+    &::placeholder {
+      color: $text-secondary;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: $text-secondary;
+    font-size: 24px;
+  }
+}
+
+.split-button {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid $border-color;
+  border-radius: 24px;
+  background-color: $main-bg-color;
+
+  &__button {
+    @include reset-button;
+    @include interactive(0.15s);
+    @include flex(row, center, center, 8px);
+
+    padding: 10px 12px;
+    overflow: hidden;
+    background-color: $main-bg-color;
+    color: $text-primary;
+    font-size: 14px;
+    font-weight: 500;
+
+    &:hover {
+      background-color: $main-accent-color;
+    }
+
+    &-icon {
+      width: 0;
+      overflow: hidden;
+      color: $primary-color !important;
+      font-size: 18px !important;
+      transition: all 0.15s linear;
+    }
+
+    &--active {
+      background-color: $primary-color;
+      color: white;
+
+      .split-button__button-icon {
+        width: 18px;
+        color: white !important;
+      }
+    }
+  }
+}
+
+.todo-list {
+  @include flex(column, flex-start, stretch, 12px);
+
+  margin-bottom: 100px;
+  list-style: none;
+}
+
+.todo-block {
+  @include flex(row, flex-start, flex-start, 12px);
+
+  min-height: 80px;
+  padding: 12px;
+  border-radius: 16px;
+  background-color: $main-accent-color;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $second-accent-color;
+  }
+
+  &:has(input[type="checkbox"]:checked) {
+    .todo-block {
+      &__title {
+        color: rgb(29 27 30 / 50%);
+        text-decoration: line-through;
+      }
+
+      &__date {
+        color: rgb(73 69 79 / 50%);
+      }
+    }
+  }
+
+  &__checkbox {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__data {
+    @include flex(column, flex-start, stretch, 6px);
+
+    flex: 1;
+  }
+
+  &__date {
+    color: $text-secondary;
+    font-size: 13px;
+  }
+
+  &__title {
+    color: $text-primary;
+    font-size: 16px;
+    font-weight: 400;
+    word-break: break-word;
+  }
+
+  &__delete {
+    @include reset-button;
+    @include interactive(0.2s, color);
+
+    flex-shrink: 0;
+    margin-left: auto;
+    padding: 4px;
+    color: $text-secondary;
+    font-size: 24px;
+
+    &:hover {
+      color: $error-color;
+    }
+  }
+}
+
+.float-button {
+  @include reset-button;
+  @include interactive;
+  @include flex(row, center, center);
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: $primary-color;
+  box-shadow: $shadow;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: $primary-light;
+  }
+
+  span {
+    color: white;
+    font-size: 28px;
+  }
+}
+
+.modal {
+  @include flex(row, center, flex-end);
+
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 50%);
+  animation: slide-up 0.3s ease-out;
+
+  &.active {
+    display: flex;
+  }
+
+  &-content {
+    width: 100%;
+    max-width: $content-width;
+    padding: 24px;
+    border-radius: 28px 28px 0 0;
+    background-color: $main-bg-color;
+    box-shadow: 0 -2px 10px rgb(0 0 0 / 10%);
+    animation: content-slide-up 0.3s ease-out;
+  }
+
+  &-header {
+    @include flex(row, space-between, center);
+
+    margin-bottom: 24px;
+  }
+
+  &-close {
+    @include reset-button;
+    @include interactive(0.2s, color);
+    @include flex(row, center, center);
+
+    padding: 0;
+    color: $text-primary;
+    font-size: 28px;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(100px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes content-slide-up {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.create-form {
+  @include flex(column, flex-start, stretch, 16px);
+
+  &__input {
+    @include input-text;
+
+    width: 100%;
+    height: 56px;
+    padding: 12px 16px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    outline: 0;
+    background-color: transparent;
+    transition: all 0.15s linear;
+
+    &::placeholder {
+      color: $text-secondary;
+    }
+
+    &:focus {
+      border-color: $primary-color;
+      background-color: $main-accent-color;
+    }
+  }
+
+  &__textarea {
+    min-height: 80px;
+    max-height: 200px;
+    height: 100px;
+    resize: vertical;
+  }
+}
+
+.form-group {
+  @include flex(column, flex-start, stretch, 8px);
+
+  label {
+    color: $text-primary;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.checkbox-label {
+  @include flex(row, flex-start, center, 12px);
+
+  padding: 8px 0;
+  color: $text-primary;
+  cursor: pointer;
+  font-size: 14px;
+
+  input[type="checkbox"] {
+    display: none;
+
+    &:checked + .checkbox-custom {
+      border-color: $primary-color;
+      background-color: $primary-color;
+      color: white;
+
+      &::after {
+        content: "✓";
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.checkbox-custom {
+  @include flex(row, center, center);
+
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid $border-color;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.form {
+  &__buttons-wrapper {
+    @include flex(row, flex-end, center, 12px);
+
+    margin-top: 16px;
+  }
+}
+
+.form-button {
+  @include interactive;
+
+  height: 40px;
+  padding: 10px 24px;
+  border: 1px solid $primary-color;
+  border-radius: 20px;
+  font-family: $font-family;
+  font-size: 14px;
+  font-weight: 500;
+
+  &--primary {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: $primary-light;
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $main-accent-color;
+    }
+  }
+}
+
+.empty-state {
+  padding: 40px 20px;
+  color: $text-secondary;
+  text-align: center;
+
+  &__icon {
+    margin-bottom: 12px;
+    opacity: 0.5;
+    font-size: 48px;
+  }
+
+  &__text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: $mobile-breakpoint) {
+  main { padding: 16px 12px 12px; gap: 12px; }
+  .main-header { font-size: 24px; }
+  .modal-content { padding: 20px; }
+  .float-button { right: 12px; bottom: 12px; }
+  .form__buttons-wrapper { flex-direction: column-reverse; }
+  .form-button { width: 100%; }
+}

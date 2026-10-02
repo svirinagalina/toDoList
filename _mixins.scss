@@ -1,0 +1,30 @@
+@use "variables" as *;
+
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin interactive($duration: 0.2s, $property: all) {
+  cursor: pointer;
+  transition: $property $duration ease;
+}
+
+@mixin reset-button {
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+@mixin input-text {
+  color: $text-primary;
+  font-family: $font-family;
+  font-size: 16px;
+  line-height: 24px;
+}
